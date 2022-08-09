@@ -9,6 +9,8 @@ public class FoodRepositoryImpl implements FoodRepository{
 
     public FoodRepositoryImpl() {
         this.foods = new ArrayList<>();
+
+
     }
 
     private Collection<Food> foods;
