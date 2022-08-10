@@ -10,6 +10,6 @@ public class TerrestrialAnimal extends BaseAnimal{
 
     @Override
     public void eat() {
-
+        setKg(getKg() + 5.70);
     }
 }

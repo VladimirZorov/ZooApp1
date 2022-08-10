@@ -4,7 +4,9 @@ import zoo.entities.animals.Animal;
 import zoo.entities.foods.Food;
 
 import java.util.Collection;
-import java.util.Collections;
+
+import static zoo.common.ExceptionMessages.AREA_NAME_NULL_OR_EMPTY;
+import static zoo.common.ExceptionMessages.NOT_ENOUGH_CAPACITY;
 
 public  abstract class BaseArea implements Area{
 
@@ -14,32 +16,42 @@ public  abstract class BaseArea implements Area{
     private Collection<Animal> animals;
 
     protected BaseArea(String name, int capacity) {
-        this.name = name;
+        setName(name);
         this.capacity = capacity;
+    }
+
+    private void setName(String name){
+        if (this.name == null || this.name.trim().isEmpty()) {
+            throw new NullPointerException(AREA_NAME_NULL_OR_EMPTY);
+        }
+        this.name = this.name;
     }
 
     @Override
     public String getName() {
-        return null;
+        return name;
     }
 
     @Override
     public Collection<Animal> getAnimals() {
-        return null;
+        return animals;
     }
 
     @Override
     public Collection<Food> getFoods() {
-        return null;
+        return foods;
     }
 
     @Override
     public int sumCalories() {
-        return 0;
+        return foods.stream().mapToInt(Food::getCalories).sum();
     }
 
     @Override
     public void addAnimal(Animal animal) {
+        if (animals.size() == capacity) {
+            throw new IllegalStateException(NOT_ENOUGH_CAPACITY);
+        }
 
     }
 

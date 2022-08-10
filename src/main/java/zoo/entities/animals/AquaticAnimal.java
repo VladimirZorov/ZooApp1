@@ -10,6 +10,6 @@ public class AquaticAnimal extends BaseAnimal{
 
     @Override
     public void eat() {
-
+        setKg(getKg() + 7.50);
     }
 }
