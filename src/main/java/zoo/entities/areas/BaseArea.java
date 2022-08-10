@@ -52,7 +52,7 @@ public  abstract class BaseArea implements Area{
         if (animals.size() == capacity) {
             throw new IllegalStateException(NOT_ENOUGH_CAPACITY);
         }
-
+        animals.add(animal);
     }
 
     @Override
