@@ -57,7 +57,7 @@ public  abstract class BaseArea implements Area{
 
     @Override
     public void removeAnimal(Animal animal) {
-        animals.remove(animal)
+        animals.remove(animal);
     }
 
     @Override
@@ -67,7 +67,7 @@ public  abstract class BaseArea implements Area{
 
     @Override
     public void feed() {
-
+//
     }
 
     @Override
