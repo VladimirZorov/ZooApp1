@@ -1,5 +1,8 @@
 package zoo.core;
 
+import zoo.entities.animals.Animal;
+import zoo.entities.animals.AquaticAnimal;
+import zoo.entities.animals.TerrestrialAnimal;
 import zoo.entities.areas.Area;
 import zoo.entities.areas.LandArea;
 import zoo.entities.areas.WaterArea;
@@ -67,7 +70,7 @@ public class ControllerImpl implements Controller {
         Food food = foodRepository.findByType(foodType);
 
         if (food == null) {
-            throw new IllegalArgumentException(NO_FOOD_FOUND, foodType);
+            throw new IllegalArgumentException(String.format(NO_FOOD_FOUND, foodType));
         }
 
         Area area = areas.get(areaName);
@@ -81,7 +84,33 @@ public class ControllerImpl implements Controller {
 
     @Override
     public String addAnimal(String areaName, String animalType, String animalName, String kind, double price) {
-        return null;
+
+        Animal animal;
+
+        if (animalType.equals("TerrestrialAnimal")){
+            animal = new TerrestrialAnimal(animalName, kind, price);
+        } else if (animalType.equals("AquaticAnimal")) {
+            animal = new AquaticAnimal(animalName, kind, price);
+        } else {
+            throw new IllegalArgumentException(INVALID_ANIMAL_TYPE);
+        }
+
+        Area area = areas.get(areaName);
+
+        String areaType = area.getClass().getSimpleName();
+
+        boolean areaAnsAnimalAreLandBased = areaType.equals("LandArea")
+                && animalType.equals("TerrestrialAnimal");
+        boolean areaAnsAnimalAreWaterBased = areaType.equals("WaterArea")
+                && animalType.equals("AquaticAnimal");
+
+        if (areaAnsAnimalAreLandBased || areaAnsAnimalAreWaterBased) {
+            area.addAnimal(animal);
+        } else {
+            return AREA_NOT_SUITABLE;
+        }
+
+        return String.format(SUCCESSFULLY_ADDED_ANIMAL_IN_AREA, animalType, areaName);
     }
 
     @Override
