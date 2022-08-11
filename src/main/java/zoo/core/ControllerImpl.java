@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static zoo.common.ConstantMessages.*;
 import static zoo.common.ExceptionMessages.*;
@@ -115,16 +116,32 @@ public class ControllerImpl implements Controller {
 
     @Override
     public String feedAnimal(String areaName) {
-        return null;
+
+        Area area = areas.get(areaName);
+        area.feed();
+        return String.format(ANIMALS_FED, area.getAnimals().size());
     }
 
     @Override
     public String calculateKg(String areaName) {
-        return null;
+
+        Collection<Animal> animals = areas.get(areaName).getAnimals();
+
+        areas.get(areaName).getAnimals();
+
+        double kgs = animals.stream()
+                .mapToDouble(Animal:: getKg)
+                .sum();
+
+        return String.format(KILOGRAMS_AREA, areaName, kgs);
     }
 
     @Override
     public String getStatistics() {
-        return null;
+
+       return areas.values().stream()
+                .map(Area::getInfo)
+                .collect(Collectors.joining(System.lineSeparator()));
+
     }
 }

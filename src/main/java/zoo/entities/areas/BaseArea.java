@@ -3,6 +3,7 @@ package zoo.entities.areas;
 import zoo.entities.animals.Animal;
 import zoo.entities.foods.Food;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -19,6 +20,8 @@ public  abstract class BaseArea implements Area{
     protected BaseArea(String name, int capacity) {
         setName(name);
         this.capacity = capacity;
+        this.foods = new ArrayList<>();
+        this.animals = new ArrayList<>();
     }
 
     private void setName(String name){
