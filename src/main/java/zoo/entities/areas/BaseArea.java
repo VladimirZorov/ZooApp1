@@ -4,6 +4,7 @@ import zoo.entities.animals.Animal;
 import zoo.entities.foods.Food;
 
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 import static zoo.common.ExceptionMessages.AREA_NAME_NULL_OR_EMPTY;
 import static zoo.common.ExceptionMessages.NOT_ENOUGH_CAPACITY;
@@ -62,16 +63,25 @@ public  abstract class BaseArea implements Area{
 
     @Override
     public void addFood(Food food) {
-
+        foods.add(food);
     }
 
     @Override
     public void feed() {
-//
+        animals.forEach(Animal::eat);
     }
 
     @Override
     public String getInfo() {
-        return null;
+
+        String animalOutput = animals.isEmpty()
+                ? "none"
+                : animals.stream().map(Animal::getName).collect(Collectors.joining(" "));
+
+        return  String.format("%s (%s):%n" +
+                "Animals: %s%n" +
+                "Foods: %d%n" +
+                "Calories: %d", name, this.getClass().getSimpleName(),
+                animalOutput,foods.size(), sumCalories());
     }
 }

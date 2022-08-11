@@ -17,16 +17,19 @@ public class FoodRepositoryImpl implements FoodRepository{
 
     @Override
     public void add(Food food) {
-
+        foods.add(food);
     }
 
     @Override
     public boolean remove(Food food) {
-        return false;
+        return foods.remove(food);
     }
 
     @Override
     public Food findByType(String type) {
-        return null;
+       return foods.stream()
+                .filter(f ->f.getClass().getSimpleName().equals(type))
+                .findFirst()
+                .orElse(null);
     }
 }
